@@ -95,6 +95,7 @@ public:
   virtual void seek(long, Offset = Set) = 0;
   virtual long pos() = 0;
 
+  static const char* version();
 protected:
   typedef @TYPE_INT@	Int;
   typedef @TYPE_FLOAT@	Float;
