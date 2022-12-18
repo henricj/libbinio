@@ -21,6 +21,10 @@
 
 #include "binio.h"
 
+#ifdef HAVE_LIBBINIO_GITVERSION
+#include "libbinio_gitversion.h"
+#endif
+
 #if BINIO_WITH_MATH
 
 #include <math.h>
@@ -111,6 +115,17 @@ binio::Error binio::error()
 bool binio::eof()
 {
   return (err & Eof ? true : false);
+}
+
+const char* binio::version()
+{
+#if defined(LIBBINIO_GITVERSION_REPO_BRANCH) && defined(LIBBINIO_GITVERSION_DESCRIBE)
+  return LIBBINIO_GITVERSION_REPO_BRANCH "/" LIBBINIO_GITVERSION_DESCRIBE;
+#elif defined(LIBBINIO_GITVERSION_DESCRIBE)
+  return LIBBINIO_GITVERSION_DESCRIBE;
+#else
+  return "<unknown>";
+#endif
 }
 
 /***** binistream *****/
