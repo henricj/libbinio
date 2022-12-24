@@ -2,11 +2,20 @@ cmake_minimum_required(VERSION 3.16..3.25)
 
 list(PREPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+include(GitVersion)
+
 ###
 ### Project
 ###
 
-project(libbinio VERSION 1.5)
+gitversion_set_version(LIBBINIO_VERSION libbinio-)
+
+if(DEFINED LIBBINIO_VERSION)
+  project(libbinio VERSION ${LIBBINIO_VERSION})
+  message(STATUS "libbinio version: ${LIBBINIO_VERSION}")
+else()
+  project(libbinio)
+endif()
 
 if(CMAKE_VERSION VERSION_LESS 3.21)
   # Set "top level" if the current CMake is too old to do so in project().
@@ -126,6 +135,10 @@ configure_libbinio()
 ###
 ### Core
 ###
+
+if(COMMAND gitversion_create_target)
+  gitversion_create_target(libbinio_gitversion)
+endif()
 
 add_subdirectory(doc)
 add_subdirectory(src)
