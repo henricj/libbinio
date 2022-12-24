@@ -54,3 +54,7 @@ if(HAVE_LIB_M)
   target_link_libraries(libbinio PUBLIC m)
 endif()
 
+if(TARGET libbinio_gitversion)
+  target_link_libraries(libbinio PRIVATE "$<BUILD_INTERFACE:libbinio_gitversion>")
+endif()
+
